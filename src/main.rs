@@ -1,11 +1,10 @@
-extern crate serde_json;
 extern crate encoding_rs;
+extern crate serde_json;
 
-use std::io::{self, Read, BufRead};
-
+use std::io::{self, BufRead, Read};
 
 use encoding_rs::UTF_8;
-use serde_json::{Value, Error, Map};
+use serde_json::{Error, Map, Value};
 
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
@@ -34,10 +33,7 @@ fn flatten_value(data: &Value, path: &str) -> String {
 }
 
 fn is_scalar(value: &Value) -> bool {
-    if value.is_boolean()
-        || value.is_null()
-        || value.is_number()
-        || value.is_string() {
+    if value.is_boolean() || value.is_null() || value.is_number() || value.is_string() {
         true
     } else {
         false
@@ -73,7 +69,6 @@ fn flatten_array(arr: &Vec<Value>, path: &str) -> String {
 
     return s;
 }
-
 
 /// Safely decode from a Read trait to a String by correctly handling potential
 /// UTF-8 BOMs, etc. To do this, we go via the encoding_rs rather than reading
